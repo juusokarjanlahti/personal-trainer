@@ -1,16 +1,12 @@
-import './App.css'
-function App() {
+import "./App.css";
+import CustomerList from "./components/CustomerList";
 
+function App() {
   return (
     <>
-    <div className="App">
-        <header className="App-header">
-            <h1>React 18</h1>
-            <p>React 18 is here!</p>
-        </header>
-    </div>
-    </>
-  )
+  <CustomerList />
+  </>
+);
 }
 
-export default App
+export default App;
