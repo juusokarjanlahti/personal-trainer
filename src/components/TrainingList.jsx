@@ -6,7 +6,7 @@ function TrainingList() {
 	const [trainings, setTrainings] = useState([]);
 
 	const fetchTrainings = () => {
-		fetch(`${API_URL}gettrainings`, {
+		fetch(`${API_URL}/gettrainings`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

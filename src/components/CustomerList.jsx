@@ -18,7 +18,7 @@ function CustomerList() {
 	]);
 
 	const fetchCustomers = () => {
-		fetch(`${API_URL}customers`, {
+		fetch(`${API_URL}/customers`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
