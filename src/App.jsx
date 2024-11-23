@@ -14,6 +14,9 @@ function App() {
 					<li>
 						<Link to="trainings">Training Sessions</Link>
 					</li>
+					<li>
+						<Link to="calendar">Training Calendar</Link>
+					</li>
 				</ul>
 			</nav>
 			<Outlet /> {/* This will render the matched child route component */}
