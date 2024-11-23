@@ -5,23 +5,24 @@ const API_URL = import.meta.env.VITE_API_URL;
 function TrainingList() {
 	const [trainings, setTrainings] = useState([]);
 
-	const fetchTrainings = () => {
-		fetch(`${API_URL}/gettrainings`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data) {
-					setTrainings(data);
-					console.log("Trainings fetched successfully");
-				} else {
-					console.error("No trainings found");
-				}
-			})
-			.catch((error) => console.error("Error fetching trainings:", error));
+	const fetchTrainings = async () => {
+		try {
+			const response = await fetch(`${API_URL}/gettrainings`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await response.json();
+			if (data) {
+				setTrainings(data);
+				console.log("Trainings fetched successfully");
+			} else {
+				console.error("No trainings found");
+			}
+		} catch (error) {
+			console.error("Error fetching trainings:", error);
+		}
 	};
 
 	useEffect(() => {
