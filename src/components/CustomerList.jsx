@@ -24,6 +24,7 @@ function CustomerList() {
 				columnDefs={columnDefs}
 				pagination={true}
 				paginationPageSize={10}
+				paginationPageSizeSelector={[10, 25, 50]}
 			/>
 		</div>
 	);
