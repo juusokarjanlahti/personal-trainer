@@ -1,58 +1,41 @@
-import React, { useEffect, useState } from "react";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import React, { useContext, useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { DataContext } from "./DataProvider";
+import { format } from "date-fns";
+import { fi } from "date-fns/locale";
 
 function TrainingList() {
-	const [trainings, setTrainings] = useState([]);
-
-	const fetchTrainings = async () => {
-		try {
-			const response = await fetch(`${API_URL}/gettrainings`, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const data = await response.json();
-			if (data) {
-				setTrainings(data);
-				console.log("Trainings fetched successfully");
-			} else {
-				console.error("No trainings found");
-			}
-		} catch (error) {
-			console.error("Error fetching trainings:", error);
-		}
-	};
-
-	useEffect(() => {
-		fetchTrainings();
-	}, []);
+	const { trainings } = useContext(DataContext);
+	const [columnDefs] = useState([
+		{ headerName: "Activity", field: "activity" },
+		{
+			headerName: "Date",
+			field: "date",
+			valueFormatter: ({ value }) =>
+				format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }),
+		},
+		{ headerName: "Duration (minutes)", field: "duration" },
+		{ headerName: "Customer First Name", field: "customer.firstname" },
+		{ headerName: "Customer Last Name", field: "customer.lastname" },
+		{ headerName: "Customer Address", field: "customer.streetaddress" },
+		{ headerName: "Customer City", field: "customer.city" },
+		{ headerName: "Customer Postcode", field: "customer.postcode" },
+		{ headerName: "Customer Email", field: "customer.email" },
+		{ headerName: "Customer Phone", field: "customer.phone" },
+	]);
 
 	return (
-		<>
+		<div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
 			<h1>Training Sessions</h1>
-			<ul>
-				{trainings.map(({ id, date, duration, activity, customer }) => (
-					// Map through the trainings array and display the training details
-					// Destructure the training object
-					<li key={id}>
-						<p>Activity: {activity}</p>
-						<p>Date: {new Date(date).toLocaleString()}</p>
-						<p>Duration: {duration} minutes</p>
-						<h3>Customer Information:</h3>
-						<p>First Name: {customer.firstname}</p>
-						<p>Last Name: {customer.lastname}</p>
-						<p>
-							Address: {customer.streetaddress}, {customer.city},{" "}
-							{customer.postcode}
-						</p>
-						<p>Email: {customer.email}</p>
-						<p>Phone: {customer.phone}</p>
-					</li>
-				))}
-			</ul>
-		</>
+			<AgGridReact
+				rowData={trainings}
+				columnDefs={columnDefs}
+				pagination={true}
+				paginationPageSize={10}
+			/>
+		</div>
 	);
 }
 
