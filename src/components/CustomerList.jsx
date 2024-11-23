@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function CustomerList() {
 	const [customers, setCustomers] = useState([]);
+	const [columnDefs] = useState([
+		{ headerName: "First Name", field: "firstname" },
+		{ headerName: "Last Name", field: "lastname" },
+		{ headerName: "Street Address", field: "streetaddress" },
+		{ headerName: "City", field: "city" },
+		{ headerName: "Postcode", field: "postcode" },
+		{ headerName: "Email", field: "email" },
+		{ headerName: "Phone", field: "phone" },
+	]);
 
 	const fetchCustomers = () => {
 		fetch(`${API_URL}customers`, {
@@ -27,36 +39,15 @@ function CustomerList() {
 	useEffect(() => fetchCustomers(), []);
 
 	return (
-		<>
+		<div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
 			<h1>Customers</h1>
-			<ul>
-				{customers.map(
-					// Map through the customers array and display the customer details
-					({
-						// Destructure the customer object
-						_links,
-						firstname,
-						lastname,
-						streetaddress,
-						city,
-						postcode,
-						email,
-						phone,
-					}) => (
-						// Key attribute and unique identifier for each customer
-						<li key={_links.self.href}>
-							<p>First Name: {firstname}</p>
-							<p>Last Name: {lastname}</p>
-							<p>
-								Address: {streetaddress}, {city}, {postcode}
-							</p>
-							<p>Email: {email}</p>
-							<p>Phone: {phone}</p>
-						</li>
-					)
-				)}
-			</ul>
-		</>
+			<AgGridReact
+				rowData={customers}
+				columnDefs={columnDefs}
+				pagination={true}
+				paginationPageSize={10}
+			/>
+		</div>
 	);
 }
 
