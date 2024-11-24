@@ -1,4 +1,4 @@
-import "./index.css";
+import "./global.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router";
@@ -6,7 +6,7 @@ import App from "./App";
 import CustomerList from "./components/CustomerList";
 import TrainingList from "./components/TrainingList";
 import TrainingCalendar from "./components/TrainingCalendar";
-import DataProvider from "./components/DataProvider";
+import DataProvider from "./context/DataProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
