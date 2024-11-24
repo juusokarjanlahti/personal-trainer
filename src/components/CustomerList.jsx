@@ -4,6 +4,8 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { DataContext } from "../context/DataProvider";
 import globalGridOptions from "../globalGridOptions";
+import AddCustomerForm from "./AddCustomerForm"; // Import AddCustomerForm
+
 
 function CustomerList() {
 	const { customers } = useContext(DataContext);
@@ -20,6 +22,7 @@ function CustomerList() {
 	return (
 		<div className="ag-theme-alpine" style={{ height: "100vh", width: "100%" }}>
 			<h1>Customers</h1>
+			<AddCustomerForm /> {/* Include AddCustomerForm */}
 			<AgGridReact
 				rowData={customers}
 				columnDefs={columnDefs}
