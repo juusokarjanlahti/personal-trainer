@@ -6,6 +6,9 @@ const globalGridOptions = {
 		sortable: true,
 		filter: true,
 	},
+	rowSelection: {
+		mode: "singleRow",
+	},
 	pagination: true,
 	paginationPageSize: 10,
 	paginationPageSizeSelector: [10, 25, 50, 100],

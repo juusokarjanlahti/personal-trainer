@@ -13,20 +13,48 @@ function TrainingList() {
 	const { trainings, setTrainings } = useContext(DataContext);
 	const [selectedRows, setSelectedRows] = useState([]);
 
-	const [columnDefs] = useState([
+	const columnDefs = useMemo(() => [
 			{
 				headerName: "Date",
 				field: "date",
 				valueFormatter: ({ value }) =>
-					format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }),
+					format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }, ), editable: true,
 			},
-			{ headerName: "Duration (minutes)", field: "duration" },
-			{ headerName: "Activity", field: "activity" },
-			]);
+			{ headerName: "Duration (minutes)", field: "duration", editable: true },
+			{ headerName: "Activity", field: "activity", editable: true },
+		], []);
 
 	const onSelectionChanged = (params) => {
 		setSelectedRows(params.api.getSelectedRows());
 	};
+
+	const onCellEditingStopped = async (params) => {
+		const updatedTraining = params.data;
+		const trainingId = updatedTraining.id;
+
+		try {
+			const response = await fetch(`${API_URL}/trainings/${trainingId}`, {
+			  method: 'PUT',
+			  headers: {
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify(updatedTraining),
+			});
+	  
+			if (!response.ok) {
+			  throw new Error('Failed to update training');
+			}
+	  
+			const updatedTrainingData = await response.json();
+			setTrainings((prevTrainings) =>
+			  prevTrainings.map((training) =>
+				training.id === updatedTrainingData.id ? updatedTrainingData : training
+			  )
+			);
+		  } catch (error) {
+			console.error(error);
+		  }
+		};
 
 	const deleteSelectedRows = async () => {
 		if (window.confirm("Are you sure you want to delete the selected training(s)?")) {
@@ -72,8 +100,8 @@ function TrainingList() {
 				<AgGridReact
 					rowData={trainings}
 					columnDefs={columnDefs}
-					rowSelection="single"
 					onSelectionChanged={onSelectionChanged}
+					onCellEditingStopped={onCellEditingStopped}
 					{...globalGridOptions}
 				/>
 			</div>
