@@ -33,7 +33,7 @@ const DataProvider = ({ children }) => {
 	return loading ? (
 		<div>Loading...</div>
 	) : (
-		<DataContext.Provider value={{ customers, trainings }}>
+		<DataContext.Provider value={{ customers, trainings, setTrainings }}>
 			{children}
 		</DataContext.Provider>
 	);
