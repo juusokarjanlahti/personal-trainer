@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { DataContext } from "./DataProvider";
+import { DataContext } from "../context/DataProvider";
+import globalGridOptions from "../globalGridOptions";
 
 function CustomerList() {
 	const { customers } = useContext(DataContext);
-	const [columnDefs] = useState([
+	const [columnDefs, setColumnDefs] = useState([
 		{ headerName: "First Name", field: "firstname" },
 		{ headerName: "Last Name", field: "lastname" },
 		{ headerName: "Street Address", field: "streetaddress" },
@@ -17,14 +18,12 @@ function CustomerList() {
 	]);
 
 	return (
-		<div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
+		<div className="ag-theme-alpine" style={{ height: "100vh", width: "100%" }}>
 			<h1>Customers</h1>
 			<AgGridReact
 				rowData={customers}
 				columnDefs={columnDefs}
-				pagination={true}
-				paginationPageSize={10}
-				paginationPageSizeSelector={[10, 25, 50]}
+				{...globalGridOptions}
 			/>
 		</div>
 	);

@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { DataContext } from "./DataProvider";
+import { DataContext } from "../context/DataProvider";
 import { format } from "date-fns";
 import { fi } from "date-fns/locale";
+import globalGridOptions from "../globalGridOptions";
 
 function TrainingList() {
 	const { trainings } = useContext(DataContext);
@@ -27,14 +28,12 @@ function TrainingList() {
 	]);
 
 	return (
-		<div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
+		<div className="ag-theme-alpine" style={{ height: "100vh", width: "100%" }}>
 			<h1>Training Sessions</h1>
 			<AgGridReact
 				rowData={trainings}
 				columnDefs={columnDefs}
-				pagination={true}
-				paginationPageSize={10}
-				paginationPageSizeSelector={[10, 25, 50]}
+				{...globalGridOptions}
 			/>
 		</div>
 	);
