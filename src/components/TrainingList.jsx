@@ -37,11 +37,15 @@ function TrainingList() {
 	};
 
 	const deleteSelectedRows = () => {
-		const selectedIds = selectedRows.map((row) => row.id);
-		const updatedTrainings = trainings.filter(
-			(training) => !selectedIds.includes(training.id)
-		);
-		setTrainings(updatedTrainings);
+		if (
+			window.confirm("Are you sure you want to delete the selected trainings?")
+		) {
+			const selectedIds = selectedRows.map((row) => row.id);
+			const updatedTrainings = trainings.filter(
+				(training) => !selectedIds.includes(training.id)
+			);
+			setTrainings(updatedTrainings);
+		}
 	};
 
 	return (
