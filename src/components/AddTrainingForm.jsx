@@ -35,7 +35,19 @@ const AddTrainingForm = () => {
       }
 
       const createdTraining = await response.json();
-      setTrainings((prevTrainings) => [...prevTrainings, createdTraining]);
+      
+      // Fetch the customer data for the newly added training session
+      const customerRes = await fetch(createdTraining._links.customer.href);
+      const customerData = await customerRes.json();
+
+      // Combine the new training data with the customer data
+      const newTrainingWithCustomerData = {
+        ...createdTraining,
+        customer: customerData,
+        id: createdTraining._links.self.href.split('/').pop(), // Extract the training ID
+      };
+
+      setTrainings((prevTrainings) => [...prevTrainings, newTrainingWithCustomerData]);
     } catch (error) {
       console.error(error);
     }
