@@ -6,6 +6,7 @@ import { DataContext } from "../context/DataProvider";
 import { format } from "date-fns";
 import { fi } from "date-fns/locale";
 import globalGridOptions from "../globalGridOptions";
+import AddTrainingForm from "./AddTrainingForm";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,12 +15,13 @@ function TrainingList() {
 	const [selectedRows, setSelectedRows] = useState([]);
 
 	const columnDefs = useMemo(() => [
-			{
-				headerName: "Date",
-				field: "date",
-				valueFormatter: ({ value }) =>
-					format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }, ), editable: true,
-			},
+		{
+			headerName: "Date",
+			field: "date",
+			valueFormatter: ({ value }) => format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }),
+			editable: true,
+			cellEditor: "agDateCellEditor",
+    },
 			{ headerName: "Duration (minutes)", field: "duration", editable: true },
 			{ headerName: "Activity", field: "activity", editable: true },
 		], []);
@@ -92,6 +94,7 @@ function TrainingList() {
 			}}
 		>
 			<h1>Training Sessions</h1>
+			<AddTrainingForm />
 			<button onClick={deleteSelectedRows} disabled={selectedRows.length === 0}>
 				Delete Selected
 			</button>
