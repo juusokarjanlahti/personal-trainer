@@ -26,18 +26,21 @@ const DataProvider = ({ children }) => {
         const trainingsRes = await fetch(`${API_URL}/trainings`);
         const { _embedded: { trainings } } = await trainingsRes.json();
 
-        // Combine training data with corresponding customer data
-        const combinedData = trainings.map(training => {
-          const customer = customerMap.get(training._links.customer.href);
-          return {
-            ...training,
-            customer,
-            id: training._links.self.href.split('/').pop(), // Extract the training ID
-          };
-        });
+        // Fetch customer data for each training session
+        const trainingsWithCustomerData = await Promise.all(
+          trainings.map(async (training) => {
+            const customerRes = await fetch(training._links.customer.href);
+            const customerData = await customerRes.json();
+            return {
+              ...training,
+              customer: customerData,
+              id: training._links.self.href.split('/').pop(), // Extract the training ID
+            };
+          })
+        );
 
         setCustomers(customers);
-        setTrainings(combinedData);
+        setTrainings(trainingsWithCustomerData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
