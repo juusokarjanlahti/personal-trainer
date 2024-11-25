@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState, useMemo, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -13,6 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 function TrainingList() {
   const { trainings, setTrainings } = useContext(DataContext);
   const [selectedRows, setSelectedRows] = useState([]);
+  const gridRef = useRef(null);
 
   const columnDefs = useMemo(() => [
     {
@@ -88,6 +89,22 @@ function TrainingList() {
     }
   };
 
+  const getParams = () => {
+    return {
+    };
+  };
+
+  const onBtnExport = () => {
+    const params = getParams();
+    gridRef.current.api.exportDataAsCsv(params);
+  };
+
+  const onBtnShowCsv = () => {
+    const params = getParams();
+    const csvContent = gridRef.current.api.getDataAsCsv(params);
+    document.querySelector("#csvResult").value = csvContent;
+  };
+
   return (
     <div
       style={{
@@ -102,8 +119,12 @@ function TrainingList() {
       <button onClick={deleteSelectedRows} disabled={selectedRows.length === 0}>
         Delete Selected
       </button>
+      <button onClick={onBtnExport}>Download CSV export file</button>
+      <button onClick={onBtnShowCsv}>Show CSV export content</button>
+      <textarea id="csvResult" style={{ width: "100%", height: "200px" }} readOnly></textarea>
       <div className="ag-theme-alpine" style={{ flex: 1, width: '100%' }}>
         <AgGridReact
+          ref={gridRef}
           rowData={trainings}
           columnDefs={columnDefs}
           onSelectionChanged={onSelectionChanged}
