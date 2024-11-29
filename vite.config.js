@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
 	plugins: [react()],
+	base: "/<personal-trainer>/",
 	test: {
 		// Enable Jest globals API, https://vitest.dev/config/#test-globals, https://jestjs.io/docs/api
 		globals: true,
