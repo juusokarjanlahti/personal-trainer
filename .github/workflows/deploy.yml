@@ -43,11 +43,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Vitest Coverage Report
-        uses: davelosert/vitest-coverage-report-action@v2.7.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          json-summary-path: coverage/coverage-summary.json
-          json-final-path: coverage/coverage-final.json
-          comment-on: pr
