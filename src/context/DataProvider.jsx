@@ -22,22 +22,16 @@ const DataProvider = ({ children }) => {
           customerMap.set(customer._links.self.href, customer);
         });
 
-        // Fetch trainings
-        const trainingsRes = await fetch(`${API_URL}/trainings`);
-        const { _embedded: { trainings } } = await trainingsRes.json();
+        // Fetch trainings with customer data
+        const trainingsRes = await fetch(`${API_URL}/gettrainings`);
+        const trainingsData = await trainingsRes.json();
 
-        // Fetch customer data for each training session
-        const trainingsWithCustomerData = await Promise.all(
-          trainings.map(async (training) => {
-            const customerRes = await fetch(training._links.customer.href);
-            const customerData = await customerRes.json();
-            return {
-              ...training,
-              customer: customerData,
-              id: training._links.self.href.split('/').pop(), // Extract the training ID
-            };
-          })
-        );
+        // Structure the data for the children components
+        const trainingsWithCustomerData = trainingsData.map(training => ({
+          ...training,
+          customer: customerMap.get(`${API_URL}/customers/${training.customer.id}`),
+          id: training.id, // Use the training ID directly from the response
+        }));
 
         setCustomers(customers);
         setTrainings(trainingsWithCustomerData);
