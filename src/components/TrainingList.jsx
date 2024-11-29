@@ -20,6 +20,12 @@ function TrainingList() {
       headerName: "Date",
       field: "date",
       valueFormatter: ({ value }) => format(new Date(value), "dd.MM.yyyy HH:mm", { locale: fi }),
+      // Custom value parser for the date field
+      valueParser: ({ newValue }) => {
+        // Parse the string back to a Date object
+        const parsedDate = parse(newValue, "dd.MM.yyyy HH:mm", new Date(), { locale: fi });
+        return isValid(parsedDate) ? parsedDate : null; // Validate and return
+      },
       editable: true,
       cellEditor: "agDateCellEditor",
     },
