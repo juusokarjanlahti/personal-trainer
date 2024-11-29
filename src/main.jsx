@@ -7,6 +7,7 @@ import CustomerList from "./components/CustomerList";
 import TrainingList from "./components/TrainingList";
 import TrainingCalendar from "./components/TrainingCalendar";
 import DataProvider from "./context/DataProvider";
+import Statistics from "./components/Statistics";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 						<Route index element={<CustomerList />} /> {/* Default route */}
 						<Route path="trainings" element={<TrainingList />} />
 						<Route path="calendar" element={<TrainingCalendar />} />
+						<Route path="statistics" element={<Statistics />} />
 					</Route>
 				</Routes>
 			</HashRouter>
