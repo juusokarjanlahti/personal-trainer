@@ -1,7 +1,10 @@
 import React, { useState, useContext } from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DataContext } from "../context/DataProvider";
+import { fi } from "date-fns/locale";
+
+registerLocale("fi", fi);
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -56,12 +59,15 @@ const AddTrainingForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Activity:</label>
-        <input
-          type="text"
-          value={activity}
-          onChange={(e) => setActivity(e.target.value)}
-          required
+        <label>Date:</label>
+        <DatePicker
+          selected={date}
+          onChange={(date) => setDate(date)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="dd.MM.yyyy HH:mm"
+          locale="fi"
         />
       </div>
       <div>
@@ -74,12 +80,12 @@ const AddTrainingForm = () => {
         />
       </div>
       <div>
-        <label>Date:</label>
-        <DatePicker
-          selected={date}
-          onChange={(date) => setDate(date)}
-          showTimeSelect
-          dateFormat="Pp"
+        <label>Activity:</label>
+        <input
+          type="text"
+          value={activity}
+          onChange={(e) => setActivity(e.target.value)}
+          required
         />
       </div>
       <div>
