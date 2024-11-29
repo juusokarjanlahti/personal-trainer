@@ -13,11 +13,9 @@ import Statistics from "./components/Statistics";
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<DataProvider>
-			<HashRouter
-				future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
-			>
+			<HashRouter>
 				<Routes>
-					<Route path="/" element={<App />} errorElement={<Error />}>
+					<Route path="/" element={<App />}>
 						<Route index element={<Welcome />} /> {/* Default route */}
 						<Route path="customers" element={<Customers />} />
 						<Route path="trainings" element={<Trainings />} />
