@@ -21,17 +21,17 @@ const localizer = dateFnsLocalizer({
 
 function TrainingCalendar() {
 	const { trainings } = useContext(DataContext); // Access trainings from DataContext
-
+  
 	// Map through the trainings array and create an event object for each training
 	const events = trainings.map((training) => {
-		// Create a new Date object from the training date
-		const trainingDate = new Date(training.date);
-		return {
-			title: training.activity,
-			start: trainingDate,
-			end: new Date(trainingDate.getTime() + training.duration * 60000),
-			customer: training.customer,
-		};
+	  // Create a new Date object from the training date
+	  const trainingDate = new Date(training.date);
+	  return {
+		title: `${training.activity} - ${training.customer.firstname} ${training.customer.lastname}`,
+		start: trainingDate,
+		end: new Date(trainingDate.getTime() + training.duration * 60000),
+		customer: training.customer,
+	  };
 	});
 
 	return (
