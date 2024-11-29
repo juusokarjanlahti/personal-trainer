@@ -7,7 +7,9 @@ const globalGridOptions = {
 		filter: true,
 	},
 	rowSelection: {
-		mode: "singleRow",
+		mode: 'singleRow',
+        checkboxes: false,
+        enableClickSelection: true,
 	},
 	pagination: true,
 	paginationPageSize: 10,

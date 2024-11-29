@@ -91,6 +91,7 @@ function TrainingList() {
 
   const getParams = () => {
     return {
+    skipColumnHeaders: true,
     };
   };
 
