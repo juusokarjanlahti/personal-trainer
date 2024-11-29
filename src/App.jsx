@@ -4,11 +4,13 @@ import { Link, Outlet } from "react-router";
 function App() {
 	return (
 		<div className="App">
-			<h1>Personal Trainer Dashboard</h1>
 			<nav>
 				<ul>
 					<li>
-						<Link to="/">Customers</Link>
+						<Link to="/">Welcome</Link>
+					</li>
+					<li>
+						<Link to="customers">Customers</Link>
 					</li>
 					<li>
 						<Link to="trainings">Training Sessions</Link>
