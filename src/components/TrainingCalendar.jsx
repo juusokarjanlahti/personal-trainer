@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo, Fragment } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { fi } from "date-fns/locale";
@@ -34,18 +34,24 @@ function TrainingCalendar() {
 	  };
 	});
 
+	const defaultDate = useMemo(() => new Date(), []);
+
 	return (
-		<div>
-			<h1>Training Calendar</h1>
-			<Calendar
-				localizer={localizer}
-				events={events}
-				startAccessor="start"
-				endAccessor="end"
-				style={{ height: 500 }}
-				culture="finnish"
-			/>
-		</div>
+		<Fragment>
+			<div>
+				<h1>Training Calendar</h1>
+				<Calendar
+					localizer={localizer}
+					events={events}
+					startAccessor="start"
+					endAccessor="end"
+					style={{ height: 500 }}
+					culture="finnish"
+					popup
+					defaultDate={defaultDate}
+				/>
+			</div>
+		</Fragment>
 	);
 }
 
