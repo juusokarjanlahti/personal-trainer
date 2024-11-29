@@ -91,7 +91,6 @@ function CustomerList() {
 			<AgGridReact
         rowData={customers}
         columnDefs={columnDefs}
-        rowSelection="single" // Enable single row selection
         onSelectionChanged={onSelectionChanged}
         onCellEditingStopped={onCellEditingStopped} // Handle cell editing stopped
         {...globalGridOptions}

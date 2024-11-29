@@ -38,7 +38,7 @@ function TrainingCalendar() {
 
 	return (
 		<Fragment>
-			<div>
+			<div className="container">
 				<h1>Training Calendar</h1>
 				<Calendar
 					localizer={localizer}

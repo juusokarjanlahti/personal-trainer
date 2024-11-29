@@ -113,14 +113,7 @@ function TrainingList() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        width: "100%",
-      }}
-    >
+    <div className="container">
       <h1>Training Sessions</h1>
       <AddTrainingForm />
       <button onClick={deleteSelectedRows} disabled={selectedRows.length === 0}>
@@ -129,7 +122,7 @@ function TrainingList() {
       <button onClick={onBtnExport}>Download CSV export file</button>
       <button onClick={onBtnShowCsv}>Show CSV export content</button>
       <textarea id="csvResult" style={{ width: "100%", height: "200px" }} readOnly></textarea>
-      <div className="ag-theme-alpine" style={{ flex: 1, width: '100%' }}>
+      <div className="ag-theme-alpine" style={{ height: "100%", width: "100%" }}>
         <AgGridReact
           ref={gridRef}
           rowData={trainings}
